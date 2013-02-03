@@ -1,0 +1,43 @@
+##OpenGL GLIB
+Perspective 70
+
+Translate -3 0 0		# move the scene away from the eye
+
+Vertex green.vert
+Fragment green.frag
+Program Green  Green <0 .5 1>
+
+
+# sphere:
+
+Color [1 0 0]
+Translate -1 0 0
+WireSphere 1
+
+# cone:
+
+Color [1 1 0]
+Translate 1.5 0 0
+TransformBegin
+	WireCone 0.5 1.
+TransformEnd
+
+# torus:
+
+Color [0 1 0]
+Translate 2 0 0
+TransformBegin
+	WireTorus .2 1.
+TransformEnd
+
+# teapot:
+
+Color [0 1 1]
+Translate 3 0 0
+TransformBegin
+	WireTeapot
+TransformEnd
+
+
+MessageBox  Push the scene back using TransZ
+MessageBox  This shader alters the green color component

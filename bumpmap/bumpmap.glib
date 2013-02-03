@@ -1,0 +1,18 @@
+##OpenGL GLIB
+
+Perspective 70
+
+
+Vertex bumpmap.vert
+Fragment bumpmap.frag
+Program BumpMap				\
+	LightX <-10.  0. 10.0>		\
+	LightY <-10. 10. 10.0>		\
+	LightZ <-10. 10. 10.0>		\
+	SurfaceColor {0.7 0.8 0.1}	\
+	BumpDensity <5. 16. 100.>	\
+	BumpSize <0.2 0.5 1.>		\
+	Ambient <0. 0.1 .4>		\
+	Height <-1. 1. 1.>
+
+Sphere 1 200 200
