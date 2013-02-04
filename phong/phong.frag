@@ -1,13 +1,11 @@
 #version 330 compatibility
 
-uniform vec4 Kdv4;       // Diffuse reflectivity
+in vec3 Position;
+in vec3 Normal;
+
+uniform vec4 Kdv4;
 uniform float uLightX, uLightY, uLightZ;
 uniform float uShiness;
-
-vec3 VertexPosition;
-vec3 VertexNormal;
-
-out vec3 LightIntensity;
 
 struct LightInfo {
   vec4 Position; // Light position in eye coords.
@@ -25,10 +23,7 @@ struct MaterialInfo {
 };
 MaterialInfo Material;
 
-mat4 ModelViewMatrix;
-mat3 NormalMatrix;
-mat4 ProjectionMatrix;
-mat4 MVP;
+layout( location = 0 ) out vec4 FragColor;
 
 void init()
 {
@@ -40,31 +35,27 @@ void init()
     Material.Kd = Kdv4.xyz;
     Material.Ks = Kdv4.xyz;
     Material.Shininess = uShiness;
-
-    ModelViewMatrix = uModelViewMatrix;
-    NormalMatrix = uNormalMatrix;
-    MVP = uModelViewProjectionMatrix;
-    VertexNormal = aNormal;
-    VertexPosition = aVertex.xyz;
 }
 
-void main()
+vec3 ads( )
 {
-    init();
-
-    vec3 tnorm = normalize( NormalMatrix * VertexNormal);
-    vec4 eyeCoords = ModelViewMatrix * vec4(VertexPosition,1.0);
-    vec3 s = normalize(vec3(Light.Position - eyeCoords));
-    vec3 v = normalize(-eyeCoords.xyz);
-    vec3 r = reflect(-s, tnorm);
-    float sDotN = max( dot( s, tnorm ), 0.0 );
-    vec3 ambient = Light.La * Material.Ka;
+    vec3 s = normalize( vec3(Light.Position) - Position );
+    vec3 v = normalize(vec3(-Position));
+    vec3 r = reflect( -s, Normal );
+	float sDotN = max( dot(s,Normal), 0.0 );
+	  
+	vec3 ambient = Light.La * Material.Ka;
     vec3 diffuse = Light.Ld * Material.Kd * sDotN;
     vec3 spec = vec3(0.0);
-    if (sDotN > 0.0)
+    if( sDotN > 0.0 )
        spec = Light.Ls * Material.Ks *
               pow( max( dot(r,v), 0.0 ), Material.Shininess );
-    
-    LightIntensity = ambient + diffuse + spec;
-    gl_Position = MVP * vec4(VertexPosition,1.0);
+
+    vec3 LightIntensity = ambient + diffuse + spec;
+	return LightIntensity;
+}
+
+void main() {
+    init();
+    FragColor = vec4(ads(), 1.0);
 }

@@ -9,11 +9,11 @@ uniform bool  uPerVertex;
 uniform bool  uFlat;
 uniform bool  uHalfAngle;
 
-flat out vec3 vNf;
+flat out vec3 vNf;  // normal vector
      out vec3 vNs;
-flat out vec3 vLf;
+flat out vec3 vLf;  // light vector
      out vec3 vLs;
-flat out vec3 vEf;
+flat out vec3 vEf;  // position in eye space
      out vec3 vEs;
 
 flat out vec3 vPVf;
