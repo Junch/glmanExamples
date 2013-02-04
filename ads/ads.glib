@@ -6,13 +6,14 @@ WindowSize 800 600
 Perspective 70
 LookAt 0 0 8  0 0 0  0 1 0
 
-Vertex	    diffuse.vert
-Fragment	diffuse.frag
+Vertex	    ads.vert
+Fragment	ads.frag
 Program diffuse \
 		uLightX <-20. 5. 20.>   	\
 		uLightY <-20. 10. 20.>		\
 		uLightZ <-20. 20. 20.>		\
-	    Kd {0.9 0.5 0.3 1}
+        uShiness <100. 100. 200.>   \
+	    Kdv4 {0.9 0.5 0.3 1}
 
 # move the scene away from the eye
 #Translate 0 0 -8		
@@ -32,13 +33,20 @@ PushMatrix
   Teapot
 PopMatrix
 
-# box:
+# cone:
+#Color [0 0 1]
+#PushMatrix
+#  Translate 3 0 0
+#  Cone 1 2
+#PopMatrix
+
+# torus:
 Color [0 0 1]
 PushMatrix
   Translate 3 0 0
-  Box 2 2 2
+  Torus 0.3 0.8 20 40
 PopMatrix
 
 #QuadXY
-Color 1 0.5 0
-QuadXZ -1.5 4.0 50 50
+Color [1 0.5 0]
+QuadXZ -1.5 3.0 50 50
